@@ -68,7 +68,7 @@ namespace LogicLayer
                 if (animal.animalType == Animal.AnimalType.Carnivore)
                 {
                     Wagon wagon = new Wagon(Wagon.WagonSize.Regular);
-                    wagon.PlaceAnimal(animal);
+                    wagon.PlaceAnimalInNewWagon(animal);
                     train.trainList.Add(wagon);
 
                 }
@@ -95,7 +95,7 @@ namespace LogicLayer
             if (!isAnimalPlaced)
             {
                 Wagon wagon = new Wagon(Wagon.WagonSize.Regular);
-                wagon.PlaceAnimal(animal);
+                wagon.PlaceAnimalInNewWagon(animal);
                 train.trainList.Add(wagon);
             }
             return train.trainList;

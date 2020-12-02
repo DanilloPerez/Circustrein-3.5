@@ -8,7 +8,8 @@ namespace LogicLayer
     {
 
         public int spaceAvailable { get; private set; }
-        public List<Animal> AnimalsinWagon { get; private set; }
+        private List<Animal> animalsinWagon;
+        public IReadOnlyList<Animal> AnimalsinWagon => animalsinWagon.AsReadOnly();
         public enum WagonSize
         {
             Regular = 10,
@@ -18,23 +19,35 @@ namespace LogicLayer
         public Wagon(WagonSize size)
         {
             this.wagonSize = size;
-            this.AnimalsinWagon = new List<Animal>();
+            this.animalsinWagon = new List<Animal>();
             this.spaceAvailable = (int)size;
         }
 
-        //place in wagon
-        public void PlaceAnimal(Animal animal)
+        //place animal in wagon
+        private void PlaceAnimal(Animal animal)
         {
-            this.AnimalsinWagon.Add(animal);
+            this.animalsinWagon.Add(animal);
             this.spaceAvailable -= (int)animal.animalSize;
         }
+
+        public void PlaceAnimalInNewWagon(Animal animal)
+        {
+            if (spaceAvailable.Equals(10))
+            {
+                this.PlaceAnimal(animal);
+            }
+            else
+            {
+                throw new Exception("Big oof");
+            }                      
+        }
         
-        //try to place animal in excisting wagon
+        //try to place animal in existing wagon
         public bool TryPlaceAnimal(Animal animal)
         {
             if (this.spaceAvailable >= (int)animal.animalSize)
             {
-                Animal tempAnimal = this.AnimalsinWagon.Find(temp => temp.animalType == Animal.AnimalType.Carnivore);
+                Animal tempAnimal = this.animalsinWagon.Find(temp => temp.animalType == Animal.AnimalType.Carnivore);
                 if (tempAnimal != null)
                 {
                     if (animal.animalSize > tempAnimal.animalSize)
