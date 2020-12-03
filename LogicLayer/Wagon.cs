@@ -9,6 +9,7 @@ namespace LogicLayer
 
         public int spaceAvailable { get; private set; }
         private List<Animal> animalsinWagon;
+
         public IReadOnlyList<Animal> AnimalsinWagon => animalsinWagon.AsReadOnly();
         public enum WagonSize
         {
@@ -21,13 +22,25 @@ namespace LogicLayer
             this.wagonSize = size;
             this.animalsinWagon = new List<Animal>();
             this.spaceAvailable = (int)size;
+            
+        }
+        public Wagon(int wagonsize)
+        {
+            
+            this.animalsinWagon = new List<Animal>();
+            this.spaceAvailable = (int)wagonsize;
+
         }
 
         //place animal in wagon
         private void PlaceAnimal(Animal animal)
         {
-            this.animalsinWagon.Add(animal);
-            this.spaceAvailable -= (int)animal.animalSize;
+            if (animal == null) { throw new Exception("You need animal, buddy");}
+            
+                this.animalsinWagon.Add(animal);
+                this.spaceAvailable -= (int)animal.animalSize;
+            
+           
         }
 
         public void PlaceAnimalInNewWagon(Animal animal)
