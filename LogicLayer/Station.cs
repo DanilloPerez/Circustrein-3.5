@@ -22,6 +22,7 @@ namespace LogicLayer
         }
         private List<Animal> SortByType(List<Animal> oldAnimals)
         {
+            
             List<Animal> carnivoreList = new List<Animal>();
             List<Animal> herbivoreList = new List<Animal>();
             foreach (Animal animal in oldAnimals)
@@ -68,6 +69,7 @@ namespace LogicLayer
                 if (animal.animalType == Animal.AnimalType.Carnivore)
                 {
                     Wagon wagon = new Wagon(Wagon.WagonSize.Regular);
+                   
                     wagon.PlaceAnimalInNewWagon(animal);
                     train.trainList.Add(wagon);
 
