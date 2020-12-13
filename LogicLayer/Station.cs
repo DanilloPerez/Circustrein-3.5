@@ -6,16 +6,18 @@ namespace LogicLayer
 {
     public class Station
     {
+        private List<Wagon> trainList;
 
-        protected Train train;
+        public IReadOnlyList<Wagon> trainlist => trainList.AsReadOnly();
 
         public Station()
-        {
-            train = new Train();
+        {            
+           trainList = new List<Wagon>();            
         }
 
         private List<Animal> SortAnimals(List<Animal> animalList)
         {
+            
             animalList = SortBySize(animalList);
             animalList = SortByType(animalList);
             return animalList;
@@ -71,7 +73,7 @@ namespace LogicLayer
                     Wagon wagon = new Wagon(Wagon.WagonSize.Regular);
                    
                     wagon.PlaceAnimalInNewWagon(animal);
-                    train.trainList.Add(wagon);
+                    trainList.Add(wagon);
 
                 }
                 //check for animaltype and try to place in used wagon, else make new wagon
@@ -80,12 +82,12 @@ namespace LogicLayer
                     HandleHerbivore(animal);
                 }
             }
-            return train.trainList;
+            return trainList;
         }
         public List<Wagon> HandleHerbivore(Animal animal)
         {
             bool isAnimalPlaced = false;
-            foreach (Wagon wagon in train.trainList)
+            foreach (Wagon wagon in trainList)
             {
 
                 if (!isAnimalPlaced)
@@ -98,9 +100,9 @@ namespace LogicLayer
             {
                 Wagon wagon = new Wagon(Wagon.WagonSize.Regular);
                 wagon.PlaceAnimalInNewWagon(animal);
-                train.trainList.Add(wagon);
+                trainList.Add(wagon);
             }
-            return train.trainList;
+            return trainList;
         }
     }
 }
