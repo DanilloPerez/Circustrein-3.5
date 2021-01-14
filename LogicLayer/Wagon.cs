@@ -58,12 +58,21 @@ namespace LogicLayer
         //try to place animal in existing wagon
         public bool TryPlaceAnimal(Animal animal)
         {
+            if (animal == null)
+            {
+                throw new ArgumentException("Animal cannot be null");
+            }
             if (this.spaceAvailable >= (int)animal.animalSize)
             {
-                Animal tempAnimal = this.animalsinWagon.Find(temp => temp.animalType == Animal.AnimalType.Carnivore);
-                if (tempAnimal != null)
+                Animal carnivore = this.animalsinWagon.Find(temp => temp.animalType == Animal.AnimalType.Carnivore);
+                if (carnivore != null)
                 {
-                    if (animal.animalSize > tempAnimal.animalSize)
+                   
+                    if(animal.animalType == Animal.AnimalType.Carnivore)
+                    {
+                        throw new ArgumentException("Cannot put two carnivores together");
+                    }
+                    if (animal.animalSize > carnivore.animalSize)
                     {
                         PlaceAnimal(animal);
                         return true;

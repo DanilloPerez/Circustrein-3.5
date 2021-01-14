@@ -11,20 +11,21 @@ namespace LogicLayer.Tests
     {
 
         [TestMethod()]
-        public void TryPlaceAnimalTest()
+        public void TryPlaceAnimalRightInputCarnivore()
         {
             //arrange
             Animal animal = new Animal(Animal.AnimalType.Carnivore, Animal.AnimalSize.Medium);
             Wagon wagon = new Wagon(Wagon.WagonSize.Regular);
             //act
             bool result = wagon.TryPlaceAnimal(animal);
-
             //assert
             Assert.IsTrue(result);
         }
 
+
+
         [TestMethod()]
-        public void PlaceAnimalInNewWagonTest()
+        public void PlaceAnimalInNewWagonWrongWagonInput()
         {
             //arrange
             Animal animal = new Animal(Animal.AnimalType.Carnivore, Animal.AnimalSize.Medium);
@@ -34,7 +35,7 @@ namespace LogicLayer.Tests
         }
 
         [TestMethod()]
-        public void PlaceAnimalInNewWagonTest1()
+        public void PlaceAnimalInNewWagonRightInput()
         {
             //arrange
             Animal animal = new Animal(Animal.AnimalType.Carnivore, Animal.AnimalSize.Medium);
@@ -48,13 +49,49 @@ namespace LogicLayer.Tests
         }
 
         [TestMethod()]
-        public void PlaceAnimalInNewWagonTest2()
+        public void PlaceAnimalInNewWagonNullTest()
         {
             //arrange
             Animal animal = null;
-            Wagon wagon = new Wagon(Wagon.WagonSize.Regular); 
+            Wagon wagon = new Wagon(Wagon.WagonSize.Regular);
             //assert/act
             Assert.ThrowsException<Exception>(() => wagon.PlaceAnimalInNewWagon(animal), "You need animal, buddy");
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException), "Cannot put two carnivores together")]
+        public void TryPlaceAnimalWrongInput()
+        {
+            //arrange
+            Wagon wagon = new Wagon(Wagon.WagonSize.Regular);
+            Animal animal = new Animal(Animal.AnimalType.Carnivore, Animal.AnimalSize.Small);
+            wagon.PlaceAnimalInNewWagon(animal);
+            //act
+            wagon.TryPlaceAnimal(animal);
+        }
+
+        [TestMethod()]
+        public void TryPlaceAnimalTestRightInput()
+        {
+            //arrange
+            Wagon wagon = new Wagon(10);
+            Animal animal = new Animal(Animal.AnimalType.Herbivore, Animal.AnimalSize.Large);
+            //act
+            bool result = wagon.TryPlaceAnimal(animal);
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException), "Animal cannot be null")]
+        public void TryPlaceAnimalNullTest()
+        {
+            //arrange
+            Wagon wagon = new Wagon(10);
+            Animal animal = null;
+            //act
+            wagon.TryPlaceAnimal(animal);
+          
         }
     }
 }

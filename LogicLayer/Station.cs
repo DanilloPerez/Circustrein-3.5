@@ -67,6 +67,10 @@ namespace LogicLayer
             animalList = SortAnimals(animalList);
             foreach (Animal animal in animalList)
             {
+                if (animal == null)
+                {
+                    throw new ArgumentException("animal can't be null");
+                }
                 // check for animaltype and make new wagon if carnivore
                 if (animal.animalType == Animal.AnimalType.Carnivore)
                 {
@@ -86,6 +90,9 @@ namespace LogicLayer
         }
         public List<Wagon> HandleHerbivore(Animal animal)
         {
+            if (animal.animalType == Animal.AnimalType.Carnivore) throw new ArgumentException("animal can't be a carnivore");
+            
+            if (animal == null) throw new ArgumentException("animal can't be null");
             bool isAnimalPlaced = false;
             foreach (Wagon wagon in trainList)
             {
